@@ -1,4 +1,6 @@
 # Google-Apps-Delegate-Admin
 
-```pip install flask
-pip install xmltodict```
+```
+pip install flask
+pip install xmltodict
+```
