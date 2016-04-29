@@ -17,3 +17,7 @@ pip install xmltodict
 3. ```python -m run``` and go to localhost:5000
 
 !["Screenshot"](http://i.imgur.com/9QlLvn0.png)
+
+## Generating client_secrets.json
+
+["See here for instructions"](https://developers.google.com/api-client-library/python/guide/aaa_oauth#acquiring--client-ids-and-secrets)
