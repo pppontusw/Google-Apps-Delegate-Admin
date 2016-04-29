@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+	<div class="col-md-6">
+		<h3> Add a delegate:</h3>
+		<form class="form-inline" action={{postlink}}  method="post" name="login">    
+			<div class="form-group">
+	         <!--<label for="newdelegate">Please enter new delegate:</label>-->
+	          {{ form.hidden_tag() }}
+	          {{ form.newdelegate(size=40, class="form-control", placeholder="Please enter new delegate")}} 
+	          
+	    	</div>     
+	    	<button type="submit" class="btn btn-default">Add</button>
+	  	</form>
+	  	<br>
+	  	{% if error %}
+		    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{error}}
+		    </div>
+	    {% endif %}
+	</div>
+	<div class="col-md-6">
+	    {% if delegate is defined %}
+	    	<h3>Account is delegated to:</h3>
+	    	<table class="table">
+	    	<tr><td>
+	    		<p>{{delegate}} <a class="glyphicon glyphicon-remove" href="{{postlink}}/{{delegate}}"></a></p>
+	    	</td></tr>
+	    	</table>
+	    {% elif delegates is defined %}
+	    	<table class="table">
+	    	<h3>Account is delegated to: </h3>
+		  	{% for delegate in delegates %}
+		  		<tr><td>
+		    	<p>{{delegate}} <a href="{{postlink}}/{{delegate}}"><span class="glyphicon glyphicon-remove brand-danger"></span></a><p> </td></tr>
+		  	{% endfor %}
+			</table>
+		{% else %}
+			<h3>Account is not delegated.</h3>
+			<br>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
