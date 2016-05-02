@@ -9,6 +9,8 @@ This is a tool to manage Mail delegations on Google Apps.
 1. Generate and put your own client_secrets.json in this folder
 2. Install dependencies
 
+You can also install it using my [ansible role](https://github.com/pppontusw/ansible-Google-Apps-Delegate-Admin)
+
 ```
 pip install flask flask-wtf xmltodict httplib2 oauth2client
 ```
