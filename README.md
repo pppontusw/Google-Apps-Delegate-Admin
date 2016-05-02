@@ -10,9 +10,7 @@ This is a tool to manage Mail delegations on Google Apps.
 2. Install dependencies
 
 ```
-pip install flask
-pip install flask-wtf
-pip install xmltodict
+pip install flask flask-wtf xmltodict httplib2 oauth2client
 ```
 3. ```python -m run``` and go to localhost:5000
 
