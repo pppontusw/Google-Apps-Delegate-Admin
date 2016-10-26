@@ -71,7 +71,11 @@ def getdelegate(domain, username):
 			err = 'Not a valid domain or insufficient access!'
 			return flask.redirect(flask.url_for('errorIndex', err=err))
 		else:
-			jsondict = jsondict['feed']
+			try:
+				jsondict = jsondict['feed']
+			except KeyError:
+				err = 'This account does not seem to exist or another issue has resulted in an invalid response from Google'
+				return flask.redirect(flask.url_for('errorIndex', err=err))
 			form = DelegateForm()
 			searchform = SearchForm()
 			postlink = '/delegateto/' + domain + '/' + username
