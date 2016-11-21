@@ -75,7 +75,6 @@ def test_get_delegate():
     html = rsp.get_data(as_text=True)
     assert 'https://apps-apis.google.com/a/feeds/emailsettings/2.0/example.com/test.user/delegation' in html
 
-
 def test_error():
     app.config['TESTING'] = True
     test_client = app.test_client()
