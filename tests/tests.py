@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from run import app
-import pytest, json, uuid
+import pytest, uuid
 
 app.config['WTF_CSRF_ENABLED'] = False
 app.secret_key = str(uuid.uuid4())
