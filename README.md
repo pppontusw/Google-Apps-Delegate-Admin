@@ -13,7 +13,7 @@ This is a tool to manage Mail delegations on Google Apps.
 ```python -m run``` and go to localhost:5000
 
 ## Test
-```py.test -v```
+```py.test -v tests.py```
 
 !["Screenshot"](http://i.imgur.com/9QlLvn0.png)
 
