@@ -1,2 +1,9 @@
 client_secrets.json
 *.pyc
+pip-selfcheck.json
+bin/
+include/
+lib/
+local/
+__pycache__
+.cache

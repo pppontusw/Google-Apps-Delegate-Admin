@@ -1,0 +1,93 @@
+- name: deploy instance
+  hosts: localhost
+  connection: local
+  roles:
+    - create-ec2-ubuntu
+
+- name: install ansible dependencies (python and aptitude)
+  hosts: launched
+  gather_facts: no
+  remote_user: ubuntu
+  pre_tasks:
+    - raw: sudo apt-get -y install python aptitude
+
+- name: do the basic setup
+  hosts: launched
+  remote_user: ubuntu
+  vars:
+    linux_users: "{{ linux_users_default }}"
+  roles: 
+    - linux-basic
+    - linux-security
+
+- name: Deploy Google Apps Delegate Admin
+  hosts: launched
+  vars:
+    - flask_wsgi_copy_files:
+      - filename: "{{flask_wsgi_app_name}}.wsgi"
+        content: |
+         activate_this = '{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}/bin/activate_this.py'
+         execfile(activate_this, dict(__file__=activate_this))
+         import sys
+         sys.path.insert(0, '{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}')
+         from run import app as application
+         import uuid
+         application.config['WTF_CSRF_ENABLED'] = True
+         application.secret_key = str(uuid.uuid4())
+         application.debug = False
+    - flask_wsgi_pip_packages: [flask, flask-wtf, httplib2, oauth2client, xmltodict]
+    - flask_wsgi_app_name: Google-Apps-Delegate-Admin
+    - vhost_extra: |
+       RewriteEngine On
+       RewriteCond %{HTTP:X-Forwarded-Proto} !https
+       RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI}
+    - static_location: static/
+    - load_modules: 
+      - rewrite
+  roles:
+    - flask-wsgi-apache
+  become: yes
+  tasks:
+    - git: 
+        repo: https://github.com/pppontusw/Google-Apps-Delegate-Admin.git
+        dest: /tmp/Google-Apps-Delegate-Admin
+      notify: restart apache
+      become: yes
+    - synchronize:
+        src: /tmp/Google-Apps-Delegate-Admin/
+        dest: "{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}"
+        recursive: yes
+      become: yes
+      delegate_to: "{{ inventory_hostname }}"
+    - file:
+        path: "{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}"
+        state: directory
+        owner: "{{flask_wsgi_user}}"
+        group: "{{flask_wsgi_group}}"
+        recurse: yes
+      become: yes
+    - name: copy client secrets
+      copy: 
+        src: ../client_secrets.json
+        dest: "{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}/client_secrets.json"
+        owner: "{{flask_wsgi_user}}"
+        group: "{{flask_wsgi_group}}"
+      notify:
+        - restart apache
+      become: yes
+
+- name: create all the aws stuff and destroy the instance
+  hosts: localhost
+  connection: local
+  roles:
+    - build-ami
+    - create-lc
+    - create-elb
+    - create-asg
+  tasks:
+    - ec2:
+        instance_id: "{{item.id}}"
+        state: absent
+        region: "{{ec2_region}}"
+        wait: yes
+      with_items: "{{ec2.instances}}"

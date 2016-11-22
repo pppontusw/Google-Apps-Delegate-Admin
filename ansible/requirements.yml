@@ -1,0 +1,31 @@
+- src: https://github.com/Universum/ansible-role-flask-apache.git
+  version: master
+  name: flask-wsgi-apache
+
+- src: https://github.com/Universum/ansible-role-linux-basic.git
+  version: master
+  name: linux-basic
+
+- src: https://github.com/Universum/ansible-role-linux-security.git
+  version: master
+  name: linux-security
+
+- src: https://github.com/Universum/ansible-role-build-ami.git
+  version: master
+  name: build-ami
+
+- src: https://github.com/Universum/ansible-role-create-asg.git
+  version: master
+  name: create-asg
+
+- src: https://github.com/Universum/ansible-role-create-elb.git
+  version: master
+  name: create-elb
+
+- src: https://github.com/Universum/ansible-role-create-lc.git
+  version: master
+  name: create-lc
+
+- src: https://github.com/Universum/ansible-role-create-ec2-ubuntu.git
+  version: master
+  name: create-ec2-ubuntu
