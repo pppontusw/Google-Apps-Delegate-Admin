@@ -35,8 +35,6 @@
          application.config['WTF_CSRF_ENABLED'] = True
          application.secret_key = str(uuid.uuid4())
          application.debug = False
-      - filename: client_secrets.json
-        content: "{{vault_gapps_delegate_client_secret_json}}"
     - flask_wsgi_pip_packages: [flask, flask-wtf, httplib2, oauth2client, xmltodict]
     - flask_wsgi_app_name: Google-Apps-Delegate-Admin
     - vhost_extra: |
@@ -70,13 +68,10 @@
       become: yes
     - name: create symlinks
       file: 
-        src: "/etc/apache2/mods-available/rewrite.load" 
-        dest: "/etc/apache2/mods-enabled/rewrite.load" 
-        state: link
+        src: ../client_secrets.json
+        dest: "{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}/client_secrets.json"
         owner: "{{flask_wsgi_user}}"
         group: "{{flask_wsgi_group}}"
-        mode: 0644
-      when: ansible_os_family == 'Debian'
       notify:
         - restart apache
       become: yes
