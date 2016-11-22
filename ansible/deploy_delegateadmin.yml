@@ -66,8 +66,8 @@
         group: "{{flask_wsgi_group}}"
         recurse: yes
       become: yes
-    - name: create symlinks
-      file: 
+    - name: copy client secrets
+      copy: 
         src: ../client_secrets.json
         dest: "{{flask_wsgi_install_path}}/{{flask_wsgi_app_name}}/client_secrets.json"
         owner: "{{flask_wsgi_user}}"
