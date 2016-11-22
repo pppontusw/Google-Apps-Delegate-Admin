@@ -1,0 +1,19 @@
+app_name: DelegateAdmin
+ec2_image: ami-0d77397e
+ec2_instance_type: t2.micro
+ec2_subnet: subnet-XXXXXX
+ec2_region: eu-west-1
+ec2_security_group: webservers
+ec2_key_name: key@keyname
+asg_subnet: subnet-XXXXXX
+elb_subnet: subnet-XXXXXX
+elb_security_group: sg-XXXXXX
+lc_security_group: sg-XXXXXX
+lc_key_name: key@keyname
+elb_certificate_id: arn:aws:elb_certificate_id
+
+linux_users_default: 
+  - name: myuser 
+    pubkey: mypubkey
+
+server_name: delegateadmin.example.com

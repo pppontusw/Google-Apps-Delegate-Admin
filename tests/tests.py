@@ -6,16 +6,11 @@ import pytest, uuid
 app.config['WTF_CSRF_ENABLED'] = False
 app.secret_key = str(uuid.uuid4())
 
-def test_home_page_redirect():
+def test_home_oauth_redirect():
     app.config['TESTING'] = False
     test_client = app.test_client()
     rsp = test_client.get('/')
     assert rsp.status == '302 FOUND'
-
-def test_oauth_redirect():
-    app.config['TESTING'] = False
-    test_client = app.test_client()
-    rsp = test_client.get('/')
     html = rsp.get_data(as_text=True)
     assert '<a href="/oauth2callback">/oauth2callback</a>' in html
 
