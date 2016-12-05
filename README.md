@@ -1,6 +1,6 @@
 # Google-Apps-Delegate-Admin
 
-[![Build Status](https://jenkins.universumglobal.com/buildStatus/icon?job=DelegateAdmin)](https://jenkins.universumglobal.com/job/DelegateAdmin)
+[![Build Status](https://travis-ci.org/pppontusw/Google-Apps-Delegate-Admin.svg?branch=master)](https://travis-ci.org/pppontusw/Google-Apps-Delegate-Admin)
 
 ## What is it?
 
