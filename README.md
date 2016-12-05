@@ -1,5 +1,7 @@
 # Google-Apps-Delegate-Admin
 
+[![Build Status](https://jenkins.universumglobal.com/buildStatus/icon?job=DelegateAdmin)](https://jenkins.universumglobal.com/job/DelegateAdmin)
+
 ## What is it?
 
 This is a tool to manage Mail delegations on Google Apps.
